@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>自動フリガナ補完</title>
-    <style>
-      @media screen and (min-width: 600px) {
-        .container {
-          max-width: 400px;
-          margin: auto;
-        }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>自動フリガナ補完</title>
+  <style>
+    @media screen and (min-width: 600px) {
+      .container {
+        max-width: 400px;
+        margin: auto;
       }
-      .container > *+* {
-        margin-top: 2em;
-      }
-      input {
-        width: 100%;
-        height: 2em;
-        line-height: 2em;
-      }
-      h3 {
-        padding: 0;
-        margin: 0 0.3em;
-      }
-    </style>
-    <script src="./autokana.js"></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', function() {
-        var a = new AutoKana()
-        a.subscribe(document.getElementById('input'), document.getElementById('output'))
-      })
-    </script>
-  </head>
-  <body>
-    <div class="container">
+    }
+    .container {
+      text-align: center;
+    }
+    .container>*+* {
+      margin-top: 2em;
+    }
+    input {
+      width: 90%;
+      height: 2em;
+      line-height: 2em;
+      margin: 0 0.5em;
+      box-sizing: border-box;
+    }
+    h3 {
+      padding: 0;
+      margin: 0 0.3em;
+    }
+  </style>
+  <script src="./autokana.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      var a = new AutoKana()
+      a.subscribe(document.getElementById('input'), document.getElementById('output'))
+    })
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div>
+      <h3>入力</h3>
       <div>
-        <h3>入力</h3>
-        <input id="input"/>
-      </div>
-      <div>
-        <h3>フリガナ</h3>
-        <input id="output"/>
+        <input id="input" />
       </div>
     </div>
-  </body>
+    <div>
+      <h3>フリガナ</h3>
+      <div>
+        <input id="output" />
+      </div>
+    </div>
+  </div>
+</body>
 </html>

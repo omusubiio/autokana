@@ -5,11 +5,12 @@
     <title>自動フリガナ</title>
     <style>
       .container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        max-width: 600px;
+        max-width: 400px;
         margin: auto;
         gap: 1em;
+      }
+      .container > *+* {
+        margin-top: 2em;
       }
       input {
         width: 100%;

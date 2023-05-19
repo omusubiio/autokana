@@ -33,7 +33,19 @@
   <script>
     window.addEventListener('DOMContentLoaded', function () {
       var a = new AutoKana()
-      a.subscribe(document.getElementById('input'), document.getElementById('output'))
+      var input = document.getElementById('input')
+      var output = document.getElementById('output')
+      var hist = document.getElementById('history')
+      a.subscribe(input, output)
+      input.addEventListener('input', () => {
+        var div = document.createElement('div')
+        div.innerHTML = `"${input.value}" / "${output.value}"`
+        if (hist.firstChild) {
+          hist.insertBefore(div, hist.firstChild)
+        } else {
+          hist.appendChild(div)
+        }
+      })
     })
   </script>
 </head>
@@ -51,6 +63,7 @@
         <input id="output" />
       </div>
     </div>
+    <div id="history"></div>
   </div>
 </body>
 </html>

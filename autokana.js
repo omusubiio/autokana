@@ -15,8 +15,13 @@ var AutoKana = function(options) {
         target: t || '',
       })
     }
+
     
     function transcript(furigana, previous, current) {
+      if (previous === current) {
+        return furigana 
+      }
+
       function grow(newFurigana) {
         addCheckpoint(current, newFurigana)
         return newFurigana
@@ -38,20 +43,11 @@ var AutoKana = function(options) {
         // mobile style input method swaps the last letter
         return grow(furigana.substring(0, furigana.length - 1) + appended)
       }
-  
-      // if (appended.length === 0 
-      //   && removed.length === 1 && removed.match(pattern) 
-      //   && furigana.length > 0 && furigana.charAt(furigana.length - 1) === removed) {
-      //   // backspace 
-      //   return grow(furigana.substring(0, furigana.length - 1))
-      // }
 
       if (appended.length === 0) {
         // backspace
         for (var i = checkpoints.length; i > 0; i--) {
           var cp = checkpoints[i - 1]
-          if (!current.startsWith(cp.source))
-            break 
           
           if (cp.source === current) {
             if (furigana.startsWith(cp.target)) {
@@ -84,9 +80,9 @@ var AutoKana = function(options) {
     addCheckpoint(source.get(), target.get())
 
     return function() {
-      // console.log(checkpoints)
       var current = source.get()
-      // console.log(previous, ' => ', current)
+
+      // console.log(`"${previous}" => "${current}" / "${target.get()}"`, checkpoints)
 
       var furigana = transcript(target.get(), previous, current)
 

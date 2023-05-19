@@ -1,5 +1,5 @@
 
-[Test](https://omusubiio.github.io/autokana)
+[Demo](https://omusubiio.github.io/autokana)
 
 ## 単純増加入力
 １文字の入力がひらがなだったら１文字転送

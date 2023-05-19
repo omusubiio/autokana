@@ -99,26 +99,30 @@ var AutoKana = function(options) {
       },
       set: function(newValue) {
         el.value = newValue 
-      }
+      },
+      subscribe: function(callback) {
+        var timeoutId = null 
+        el.addEventListener('input', function() {
+          // Safari's IME emits wrong event when transform
+          if (timeoutId) {
+            clearTimeout(timeoutId)
+            timeoutId = null
+          }
+          timeoutId = setTimeout(callback, 50)
+        })
+      },
     }
   }
 
   function subscribe(sourceEl, targetEl) {
-    var handle = newHandler(ofInputElement(sourceEl), ofInputElement(targetEl))
-    var timeoutId = null 
-
-    sourceEl.addEventListener('input', function() {
-      // Safari's IME emits wrong event when transform
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        timeoutId = null
-      }
-      timeoutId = setTimeout(handle, 50)
-    })
+    var source = ofInputElement(sourceEl)
+    var handle = newHandler(source, ofInputElement(targetEl))
+    source.subscribe(handle)
   }
 
   return {
     newHandler: newHandler,
     subscribe: subscribe,
+    ofInputElement: ofInputElement,
   }
 }

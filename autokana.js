@@ -105,8 +105,15 @@ var AutoKana = function(options) {
 
   function subscribe(sourceEl, targetEl) {
     var handle = newHandler(ofInputElement(sourceEl), ofInputElement(targetEl))
+    var timeoutId = null 
+
     sourceEl.addEventListener('input', function() {
-      handle()
+      // Safari's IME emits wrong event when transform
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
+      timeoutId = setTimeout(handle, 50)
     })
   }
 

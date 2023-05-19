@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>自動フリガナ</title>
+    <style>
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 600px;
+        margin: auto;
+        gap: 1em;
+      }
+      input {
+        width: 100%;
+      }
+    </style>
+    <script src="./autokana.js"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var a = new AutoKana()
+        a.subscribe(document.getElementById('input'), document.getElementById('output'))
+      })
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h3>入力</h3>
+        <input id="input"/>
+      </div>
+      <div>
+        <h3>フリガナ</h3>
+        <input id="output"/>
+      </div>
+    </div>
+  </body>
+</html>

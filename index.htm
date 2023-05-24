@@ -18,7 +18,7 @@
       margin-top: 2em;
     }
     input {
-      width: 90%;
+      width: 16em;
       height: 2em;
       line-height: 2em;
       margin: 0 0.5em;
@@ -32,11 +32,17 @@
   <script src="./autokana.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', function () {
-      var a = new AutoKana()
+      // var a = new AutoKana()
       var input = document.getElementById('input')
       var output = document.getElementById('output')
       var hist = document.getElementById('history')
-      a.subscribe(input, output)
+
+      AutoKana.subscribe({
+        input: AutoKana.ofInputElement(input),
+        output: AutoKana.ofInputElement(output),
+      })
+      // a.subscribe(input, output)
+
       input.addEventListener('input', () => {
         var div = document.createElement('div')
         div.innerHTML = `"${input.value}" / "${output.value}"`

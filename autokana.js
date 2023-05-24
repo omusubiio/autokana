@@ -1,10 +1,9 @@
-var AutoKana = function(options) {
-  options = options || { }
+var AutoKana = function() {  
+  function newHandler(options) {
+    var pattern = options.pattern || /[\u3041-\u3094]/
+    var source = options.input 
+    var target = options.output 
 
-  var pattern = options.pattern || /[\u3041-\u3094]/
-  
-
-  function newHandler(source, target) {
     var previous = source.get() 
 
     var checkpoints = []
@@ -114,10 +113,10 @@ var AutoKana = function(options) {
     }
   }
 
-  function subscribe(sourceEl, targetEl) {
-    var source = ofInputElement(sourceEl)
-    var handle = newHandler(source, ofInputElement(targetEl))
-    source.subscribe(handle)
+  function subscribe(options) {
+    // var source = ofInputElement(sourceEl)
+    var handle = newHandler(options)
+    options.input.subscribe(handle)
   }
 
   return {
@@ -125,4 +124,4 @@ var AutoKana = function(options) {
     subscribe: subscribe,
     ofInputElement: ofInputElement,
   }
-}
+}()

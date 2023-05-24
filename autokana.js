@@ -100,16 +100,20 @@ var AutoKana = function() {
         el.value = newValue 
       },
       subscribe: function(callback) {
-        var timeoutId = null 
-        el.addEventListener('input', function() {
-          // Safari's IME emits wrong event when transform
-          if (timeoutId) {
-            clearTimeout(timeoutId)
-            timeoutId = null
-          }
-          timeoutId = setTimeout(callback, 50)
-        })
+        el.addEventListener('input', delayedForIOS(callback))
       },
+    }
+  }
+
+  function delayedForIOS(callback) {    
+    var timeoutId = null 
+    return function() {
+      // Safari's IME emits wrong event when transform
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
+      timeoutId = setTimeout(callback, 50)
     }
   }
 
@@ -119,9 +123,26 @@ var AutoKana = function() {
     options.input.subscribe(handle)
   }
 
+  function kata2Hira(src) {
+    return src.replace(/[\u30a1-\u30f6]/g, function(match) {
+      var chr = match.charCodeAt(0) - 0x60;
+      return String.fromCharCode(chr);
+    });
+  }
+  
+  function hira2Kata(src) {
+    return src.replace(/[\u3041-\u3096]/g, function(match) {
+      var chr = match.charCodeAt(0) + 0x60;
+      return String.fromCharCode(chr);
+    });
+  }
+
   return {
     newHandler: newHandler,
     subscribe: subscribe,
     ofInputElement: ofInputElement,
+    kata2Hira: kata2Hira,
+    hira2Kata: hira2Kata,
+    delayedForIOS: delayedForIOS,
   }
 }()
